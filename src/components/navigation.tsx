@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { useState } from "react"
+import { useState } from 'react'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
-import { FileText, LogOut, Menu, X } from "lucide-react"
+import { FileText, LogOut, Menu, X } from 'lucide-react'
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 export function Navigation() {
   const location = useLocation()
@@ -17,14 +17,14 @@ export function Navigation() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("token")
-    navigate({ to: "/login" })
+    localStorage.removeItem('token')
+    navigate({ to: '/login' })
   }
 
   const navItems = [
     {
-      title: "Forms",
-      href: "/form",
+      title: 'Forms',
+      href: '/form',
       icon: FileText,
     },
   ]
@@ -39,8 +39,8 @@ export function Navigation() {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 transform bg-sidebar transition-transform duration-200 ease-in-out md:relative md:translate-x-0",
-          isOpen ? "translate-x-0" : "-translate-x-full",
+          'fixed inset-y-0 left-0 z-40 w-64 transform bg-sidebar transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
+          isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         <div className="flex h-full flex-col">
@@ -60,10 +60,10 @@ export function Navigation() {
                 key={item.href}
                 to={item.href}
                 className={cn(
-                  "flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  'flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
                   location.pathname.startsWith(item.href)
-                    ? "bg-primary text-primary-foreground"
-                    : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                    ? 'bg-primary text-primary-foreground'
+                    : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                 )}
               >
                 <item.icon className="mr-3 h-5 w-5" />
@@ -89,4 +89,3 @@ export function Navigation() {
     </>
   )
 }
-

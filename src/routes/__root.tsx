@@ -18,7 +18,7 @@ function Root() {
   if (location.pathname === '/login') {
     return <Outlet />
   }
-  
+
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
       <Navigation />

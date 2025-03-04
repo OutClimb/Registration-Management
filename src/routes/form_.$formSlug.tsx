@@ -14,14 +14,13 @@ export const Route = createFileRoute('/form_/$formSlug')({
 })
 
 function FormDetails() {
-    // const data = Route.useLoaderData()
-    return (
-      <>
-        <header className="mb-8 ml-12 md:ml-0">
-          <h1 className="text-3xl font-bold tracking-tight"></h1>
-        </header>
-        <div className="rounded-lg border shadow-sm">
-        </div>
-      </>
-    )
+  // const data = Route.useLoaderData()
+  return (
+    <>
+      <header className="mb-8 ml-12 md:ml-0">
+        <h1 className="text-3xl font-bold tracking-tight"></h1>
+      </header>
+      <div className="rounded-lg border shadow-sm"></div>
+    </>
+  )
 }
