@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { fetchToken } from '@/utils/token'
 
 export function LoginForm() {
   const navigate = useNavigate()
@@ -40,25 +41,15 @@ export function LoginForm() {
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/v1/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-
-      if (response.status === 401) {
-        throw new Error('Invalid email or password')
-      } else if (response.status >= 300) {
-        throw new Error('An error occurred. Please try again.')
+      const data = await fetchToken(formData.username, formData.password)
+      localStorage.setItem('token', data.token)
+      navigate({ to: '/form' })
+    } catch (error) {
+      if (error instanceof Error && error.message === 'Unauthorized') {
+        setError('Invalid email or password')
       } else {
-        const data = await response.json();
-        localStorage.setItem('token', data.token)
-        navigate({ to: '/dashboard' })
+        setError('An error occurred. Please try again.')
       }
-    } catch {
-      setError('An error occurred. Please try again.')
     } finally {
       setIsLoading(false)
     }

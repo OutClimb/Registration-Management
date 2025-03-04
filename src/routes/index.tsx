@@ -5,7 +5,7 @@ export const Route = createFileRoute('/')({
     if (localStorage.getItem('token') == null) {
       throw redirect({ to: '/login' })
     } else {
-      throw redirect({ to: '/dashboard' })
+      throw redirect({ to: '/form' })
     }
   },
 })

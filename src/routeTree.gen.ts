@@ -12,8 +12,9 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
-import { Route as DashboardImport } from './routes/dashboard'
+import { Route as FormImport } from './routes/form'
 import { Route as IndexImport } from './routes/index'
+import { Route as FormFormSlugImport } from './routes/form_.$formSlug'
 
 // Create/Update Routes
 
@@ -23,15 +24,21 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DashboardRoute = DashboardImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const FormRoute = FormImport.update({
+  id: '/form',
+  path: '/form',
   getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FormFormSlugRoute = FormFormSlugImport.update({
+  id: '/form_/$formSlug',
+  path: '/form/$formSlug',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,11 +53,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardImport
+    '/form': {
+      id: '/form'
+      path: '/form'
+      fullPath: '/form'
+      preLoaderRoute: typeof FormImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/form_/$formSlug': {
+      id: '/form_/$formSlug'
+      path: '/form/$formSlug'
+      fullPath: '/form/$formSlug'
+      preLoaderRoute: typeof FormFormSlugImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -67,45 +81,52 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/form': typeof FormRoute
   '/login': typeof LoginRoute
+  '/form/$formSlug': typeof FormFormSlugRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/form': typeof FormRoute
   '/login': typeof LoginRoute
+  '/form/$formSlug': typeof FormFormSlugRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRoute
+  '/form': typeof FormRoute
   '/login': typeof LoginRoute
+  '/form_/$formSlug': typeof FormFormSlugRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login'
+  fullPaths: '/' | '/form' | '/login' | '/form/$formSlug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login'
-  id: '__root__' | '/' | '/dashboard' | '/login'
+  to: '/' | '/form' | '/login' | '/form/$formSlug'
+  id: '__root__' | '/' | '/form' | '/login' | '/form_/$formSlug'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRoute
+  FormRoute: typeof FormRoute
   LoginRoute: typeof LoginRoute
+  FormFormSlugRoute: typeof FormFormSlugRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
+  FormRoute: FormRoute,
   LoginRoute: LoginRoute,
+  FormFormSlugRoute: FormFormSlugRoute,
 }
 
-export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {
@@ -114,18 +135,22 @@ export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileT
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/dashboard",
-        "/login"
+        "/form",
+        "/login",
+        "/form_/$formSlug"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/dashboard": {
-      "filePath": "dashboard.tsx"
+    "/form": {
+      "filePath": "form.tsx"
     },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/form_/$formSlug": {
+      "filePath": "form_.$formSlug.tsx"
     }
   }
 }
