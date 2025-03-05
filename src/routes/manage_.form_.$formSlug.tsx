@@ -14,9 +14,20 @@ export const Route = createFileRoute('/manage_/form_/$formSlug')({
     }
   },
   loader: async ({ params }) => {
-    return {
-      form: await fetchForm(params.formSlug),
-      submissions: await fetchSubmissions(params.formSlug),
+    try {
+      return {
+        form: await fetchForm(params.formSlug),
+        submissions: await fetchSubmissions(params.formSlug),
+      }
+    } catch (error) {
+      if (error instanceof Error && error.message === 'Unauthorized') {
+        localStorage.removeItem('token')
+        throw redirect({ to: '/manage/login' })
+      } else if (error instanceof Error && error.message === 'Not Found') {
+        throw redirect({ to: '/manage/form' })
+      }
+
+      throw error
     }
   },
 })
@@ -25,14 +36,14 @@ function FormDetails() {
   const data = Route.useLoaderData()
 
   const handleVisit = () => {
-    window.open(`/form/${data.form.slug}`, '_blank')
+    window.open(`/form/${data.form?.slug}`, '_blank')
   }
 
   return (
     <>
       <header className="mb-8 ml-12 md:ml-0">
         <h1 className="flex text-3xl font-bold tracking-tight">
-          <span className="flex-auto">{data.form.name}</span>
+          <span className="flex-auto">{data.form?.name}</span>
           <Button variant="outline" onClick={handleVisit}>
             <SquareArrowOutUpRight />
             Visit

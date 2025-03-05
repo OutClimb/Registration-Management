@@ -6,7 +6,9 @@ export async function fetchForm(slug: string): Promise<FormDetailResponse> {
     const response = await fetch(`${getBaseURL()}/api/v1/form/${slug}`, {
       method: 'GET',
     })
-    if (response.status >= 300) {
+    if (response.status === 404) {
+      throw new Error('Not Found')
+    } else if (response.status >= 300) {
       throw new Error('An error occurred. Please try again.')
     } else {
       return await response.json()

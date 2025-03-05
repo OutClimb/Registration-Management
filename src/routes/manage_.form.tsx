@@ -16,7 +16,18 @@ export const Route = createFileRoute('/manage_/form')({
       },
     ],
   }),
-  loader: () => fetchForms(),
+  loader: () => {
+    try {
+      return fetchForms()
+    } catch (error) {
+      if (error instanceof Error && error.message === 'Unauthorized') {
+        localStorage.removeItem('token')
+        throw redirect({ to: '/manage/login' })
+      }
+
+      throw error
+    }
+  },
 })
 
 function Form() {

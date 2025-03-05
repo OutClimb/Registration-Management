@@ -12,6 +12,8 @@ export async function fetchSubmissions(formSlug: string): Promise<SubmissionResp
     })
     if (response.status === 401) {
       throw new Error('Unauthorized')
+    } else if (response.status === 404) {
+      throw new Error('Not Found')
     } else if (response.status >= 300) {
       throw new Error('An error occurred. Please try again.')
     } else {
