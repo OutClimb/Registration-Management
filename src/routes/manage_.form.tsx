@@ -2,11 +2,11 @@ import { FormsTable } from '@/components/forms-table'
 import { fetchForms } from '@/utils/form'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/form')({
+export const Route = createFileRoute('/manage_/form')({
   component: Form,
   beforeLoad: async () => {
     if (localStorage.getItem('token') == null) {
-      throw redirect({ to: '/login' })
+      throw redirect({ to: '/manage/login' })
     }
   },
   head: () => ({

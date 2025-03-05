@@ -1,11 +1,11 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/manage_/')({
   beforeLoad: async () => {
     if (localStorage.getItem('token') == null) {
-      throw redirect({ to: '/login' })
+      throw redirect({ to: '/manage/login' })
     } else {
-      throw redirect({ to: '/form' })
+      throw redirect({ to: '/manage/form' })
     }
   },
 })

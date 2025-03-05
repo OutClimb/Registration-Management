@@ -18,13 +18,13 @@ export function Navigation() {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    navigate({ to: '/login' })
+    navigate({ to: '/manage/login' })
   }
 
   const navItems = [
     {
       title: 'Forms',
-      href: '/form',
+      href: '/manage/form',
       icon: FileText,
     },
   ]

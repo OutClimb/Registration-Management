@@ -20,14 +20,14 @@ export function FormsTable({ data }: { data: FormResponse }) {
             {data.map((item) => (
               <TableRow key={item.slug}>
                 <TableCell>
-                  <Link to="/form/$formSlug" params={{ formSlug: item.slug }}>
+                  <Link to="/manage/form/$formSlug" params={{ formSlug: item.slug }}>
                     {item.name}
                   </Link>
                 </TableCell>
                 <TableCell>{item.template}</TableCell>
                 <TableCell>{item.opens_on}</TableCell>
                 <TableCell>{item.closes_on}</TableCell>
-                <TableCell>{item.max_submissions === 0 ? 'None' : `${item.max_submissions} People`}</TableCell>
+                <TableCell>{item.max_submissions === 0 ? 'Unlimited' : `${item.max_submissions} People`}</TableCell>
               </TableRow>
             ))}
           </TableBody>

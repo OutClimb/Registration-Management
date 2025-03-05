@@ -11,34 +11,34 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as LoginImport } from './routes/login'
-import { Route as FormImport } from './routes/form'
-import { Route as IndexImport } from './routes/index'
-import { Route as FormFormSlugImport } from './routes/form_.$formSlug'
+import { Route as ManageIndexImport } from './routes/manage_.index'
+import { Route as ManageLoginImport } from './routes/manage_.login'
+import { Route as ManageFormImport } from './routes/manage_.form'
+import { Route as ManageFormFormSlugImport } from './routes/manage_.form_.$formSlug'
 
 // Create/Update Routes
 
-const LoginRoute = LoginImport.update({
-  id: '/login',
-  path: '/login',
+const ManageIndexRoute = ManageIndexImport.update({
+  id: '/manage_/',
+  path: '/manage/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const FormRoute = FormImport.update({
-  id: '/form',
-  path: '/form',
+const ManageLoginRoute = ManageLoginImport.update({
+  id: '/manage_/login',
+  path: '/manage/login',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
-  id: '/',
-  path: '/',
+const ManageFormRoute = ManageFormImport.update({
+  id: '/manage_/form',
+  path: '/manage/form',
   getParentRoute: () => rootRoute,
 } as any)
 
-const FormFormSlugRoute = FormFormSlugImport.update({
-  id: '/form_/$formSlug',
-  path: '/form/$formSlug',
+const ManageFormFormSlugRoute = ManageFormFormSlugImport.update({
+  id: '/manage_/form_/$formSlug',
+  path: '/manage/form/$formSlug',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,32 +46,32 @@ const FormFormSlugRoute = FormFormSlugImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+    '/manage_/form': {
+      id: '/manage_/form'
+      path: '/manage/form'
+      fullPath: '/manage/form'
+      preLoaderRoute: typeof ManageFormImport
       parentRoute: typeof rootRoute
     }
-    '/form': {
-      id: '/form'
-      path: '/form'
-      fullPath: '/form'
-      preLoaderRoute: typeof FormImport
+    '/manage_/login': {
+      id: '/manage_/login'
+      path: '/manage/login'
+      fullPath: '/manage/login'
+      preLoaderRoute: typeof ManageLoginImport
       parentRoute: typeof rootRoute
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
+    '/manage_/': {
+      id: '/manage_/'
+      path: '/manage'
+      fullPath: '/manage'
+      preLoaderRoute: typeof ManageIndexImport
       parentRoute: typeof rootRoute
     }
-    '/form_/$formSlug': {
-      id: '/form_/$formSlug'
-      path: '/form/$formSlug'
-      fullPath: '/form/$formSlug'
-      preLoaderRoute: typeof FormFormSlugImport
+    '/manage_/form_/$formSlug': {
+      id: '/manage_/form_/$formSlug'
+      path: '/manage/form/$formSlug'
+      fullPath: '/manage/form/$formSlug'
+      preLoaderRoute: typeof ManageFormFormSlugImport
       parentRoute: typeof rootRoute
     }
   }
@@ -80,51 +80,62 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/form': typeof FormRoute
-  '/login': typeof LoginRoute
-  '/form/$formSlug': typeof FormFormSlugRoute
+  '/manage/form': typeof ManageFormRoute
+  '/manage/login': typeof ManageLoginRoute
+  '/manage': typeof ManageIndexRoute
+  '/manage/form/$formSlug': typeof ManageFormFormSlugRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/form': typeof FormRoute
-  '/login': typeof LoginRoute
-  '/form/$formSlug': typeof FormFormSlugRoute
+  '/manage/form': typeof ManageFormRoute
+  '/manage/login': typeof ManageLoginRoute
+  '/manage': typeof ManageIndexRoute
+  '/manage/form/$formSlug': typeof ManageFormFormSlugRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/form': typeof FormRoute
-  '/login': typeof LoginRoute
-  '/form_/$formSlug': typeof FormFormSlugRoute
+  '/manage_/form': typeof ManageFormRoute
+  '/manage_/login': typeof ManageLoginRoute
+  '/manage_/': typeof ManageIndexRoute
+  '/manage_/form_/$formSlug': typeof ManageFormFormSlugRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/form' | '/login' | '/form/$formSlug'
+  fullPaths:
+    | '/manage/form'
+    | '/manage/login'
+    | '/manage'
+    | '/manage/form/$formSlug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/form' | '/login' | '/form/$formSlug'
-  id: '__root__' | '/' | '/form' | '/login' | '/form_/$formSlug'
+  to: '/manage/form' | '/manage/login' | '/manage' | '/manage/form/$formSlug'
+  id:
+    | '__root__'
+    | '/manage_/form'
+    | '/manage_/login'
+    | '/manage_/'
+    | '/manage_/form_/$formSlug'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  FormRoute: typeof FormRoute
-  LoginRoute: typeof LoginRoute
-  FormFormSlugRoute: typeof FormFormSlugRoute
+  ManageFormRoute: typeof ManageFormRoute
+  ManageLoginRoute: typeof ManageLoginRoute
+  ManageIndexRoute: typeof ManageIndexRoute
+  ManageFormFormSlugRoute: typeof ManageFormFormSlugRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  FormRoute: FormRoute,
-  LoginRoute: LoginRoute,
-  FormFormSlugRoute: FormFormSlugRoute,
+  ManageFormRoute: ManageFormRoute,
+  ManageLoginRoute: ManageLoginRoute,
+  ManageIndexRoute: ManageIndexRoute,
+  ManageFormFormSlugRoute: ManageFormFormSlugRoute,
 }
 
-export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {
@@ -132,23 +143,23 @@ export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileT
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/form",
-        "/login",
-        "/form_/$formSlug"
+        "/manage_/form",
+        "/manage_/login",
+        "/manage_/",
+        "/manage_/form_/$formSlug"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/manage_/form": {
+      "filePath": "manage_.form.tsx"
     },
-    "/form": {
-      "filePath": "form.tsx"
+    "/manage_/login": {
+      "filePath": "manage_.login.tsx"
     },
-    "/login": {
-      "filePath": "login.tsx"
+    "/manage_/": {
+      "filePath": "manage_.index.tsx"
     },
-    "/form_/$formSlug": {
-      "filePath": "form_.$formSlug.tsx"
+    "/manage_/form_/$formSlug": {
+      "filePath": "manage_.form_.$formSlug.tsx"
     }
   }
 }

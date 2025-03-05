@@ -43,7 +43,7 @@ export function LoginForm() {
     try {
       const data = await fetchToken(formData.username, formData.password)
       localStorage.setItem('token', data.token)
-      navigate({ to: '/form' })
+      navigate({ to: '/manage/form' })
     } catch (error) {
       if (error instanceof Error && error.message === 'Unauthorized') {
         setError('Invalid email or password')
