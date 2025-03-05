@@ -4,7 +4,7 @@ import type { FormDetailResponse, FormResponse } from '@/types/form'
 export async function fetchForm(slug: string): Promise<FormDetailResponse> {
   try {
     const response = await fetch(`${getBaseURL()}/api/v1/form/${slug}`, {
-      method: 'GET'
+      method: 'GET',
     })
     if (response.status >= 300) {
       throw new Error('An error occurred. Please try again.')

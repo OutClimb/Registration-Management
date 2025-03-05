@@ -8,24 +8,24 @@ export function FormDetailsTable({ form }: { form: FormDetailResponse }) {
         <Table>
           <TableBody>
             <TableRow>
-                <TableHead className="w-1">Slug</TableHead>
-                <TableCell>{form.slug}</TableCell>
+              <TableHead className="w-1">Slug</TableHead>
+              <TableCell>{form.slug}</TableCell>
             </TableRow>
             <TableRow>
-                <TableHead>Template</TableHead>
-                <TableCell>{form.template}</TableCell>
+              <TableHead>Template</TableHead>
+              <TableCell>{form.template}</TableCell>
             </TableRow>
             <TableRow>
-                <TableHead>Opens On</TableHead>
-                <TableCell>{(form.opens_on === '') ? 'Forever' : form.opens_on}</TableCell>
+              <TableHead>Opens On</TableHead>
+              <TableCell>{form.opens_on === '' ? 'Forever' : form.opens_on}</TableCell>
             </TableRow>
             <TableRow>
-                <TableHead>Closes On</TableHead>
-                <TableCell>{(form.closes_on === '') ? 'Never' : form.closes_on}</TableCell>
+              <TableHead>Closes On</TableHead>
+              <TableCell>{form.closes_on === '' ? 'Never' : form.closes_on}</TableCell>
             </TableRow>
             <TableRow>
-                <TableHead>Max Number of Submissions</TableHead>
-                <TableCell>{(form.max_submissions === 0) ? 'Unlimited' : `${form.max_submissions} People` }</TableCell>
+              <TableHead>Max Number of Submissions</TableHead>
+              <TableCell>{form.max_submissions === 0 ? 'Unlimited' : `${form.max_submissions} People`}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

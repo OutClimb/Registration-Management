@@ -5,7 +5,7 @@ import { Button } from './ui/button'
 import { Download } from 'lucide-react'
 import { downloadCSV } from '@/utils/csv'
 
-export function SubmissionsTable({ form, submissions }: { form: FormDetailResponse, submissions: SubmissionResponse }) {
+export function SubmissionsTable({ form, submissions }: { form: FormDetailResponse; submissions: SubmissionResponse }) {
   const fields = Object.values(form.fields).sort((a, b) => a.order - b.order)
 
   const handleDownload = () => {
@@ -18,7 +18,10 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
       <div className="border-b px-6 py-4">
         <h2 className="flex text-xl font-semibold">
           <span className="flex-auto">Submissions ({submissions.length})</span>
-          <Button variant="outline" onClick={handleDownload}><Download />Download</Button>
+          <Button variant="outline" onClick={handleDownload}>
+            <Download />
+            Download
+          </Button>
         </h2>
       </div>
       <div className="overflow-x-auto">

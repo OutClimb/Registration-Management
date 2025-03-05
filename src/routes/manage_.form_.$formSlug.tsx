@@ -32,8 +32,11 @@ function FormDetails() {
     <>
       <header className="mb-8 ml-12 md:ml-0">
         <h1 className="flex text-3xl font-bold tracking-tight">
-          <span className="flex-auto">{ data.form.name }</span>
-          <Button variant="outline" onClick={handleVisit}><SquareArrowOutUpRight />Visit</Button>
+          <span className="flex-auto">{data.form.name}</span>
+          <Button variant="outline" onClick={handleVisit}>
+            <SquareArrowOutUpRight />
+            Visit
+          </Button>
         </h1>
       </header>
       <div className="mb-8 rounded-lg border shadow-sm">
