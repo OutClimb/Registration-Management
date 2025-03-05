@@ -3,7 +3,7 @@ import { getBaseURL } from './env'
 
 export async function fetchSubmissions(formSlug: string): Promise<SubmissionResponse> {
   const token = localStorage.getItem('token') || ''
-  let response;
+  let response
 
   try {
     response = await fetch(`${getBaseURL()}/api/v1/submission/${formSlug}`, {

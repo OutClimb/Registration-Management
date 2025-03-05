@@ -2,7 +2,7 @@ import { getBaseURL } from './env'
 import type { FormDetailResponse, FormResponse } from '@/types/form'
 
 export async function fetchForm(slug: string): Promise<FormDetailResponse> {
-  let response;
+  let response
 
   try {
     response = await fetch(`${getBaseURL()}/api/v1/form/${slug}`, {
@@ -17,7 +17,7 @@ export async function fetchForm(slug: string): Promise<FormDetailResponse> {
   } else if (!response.ok) {
     throw new Error('An error occurred. Please try again.')
   }
-  
+
   try {
     return await response.json()
   } catch {
@@ -27,7 +27,7 @@ export async function fetchForm(slug: string): Promise<FormDetailResponse> {
 
 export async function fetchForms(): Promise<FormResponse> {
   const token = localStorage.getItem('token') || ''
-  let response;
+  let response
 
   try {
     response = await fetch(`${getBaseURL()}/api/v1/form`, {
