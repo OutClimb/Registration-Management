@@ -16,7 +16,7 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
   return (
     <div>
       <div className="border-b px-6 py-4">
-        <h2 className="flex text-xl font-semibold">
+        <h2 className="flex items-center text-xl font-semibold">
           <span className="flex-auto">Submissions ({submissions.length})</span>
           <Button variant="outline" onClick={handleDownload}>
             <Download />
