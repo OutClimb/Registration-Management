@@ -3,6 +3,11 @@ import { FormResponse } from '@/types/form'
 import { Link } from '@tanstack/react-router'
 
 export function FormsTable({ data }: { data: FormResponse }) {
+  const dateFormatter = new Intl.DateTimeFormat(undefined, {
+    dateStyle: 'full',
+    timeStyle: 'short',
+  })
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -25,8 +30,10 @@ export function FormsTable({ data }: { data: FormResponse }) {
                   </Link>
                 </TableCell>
                 <TableCell>{item.template}</TableCell>
-                <TableCell>{item.opens_on}</TableCell>
-                <TableCell>{item.closes_on}</TableCell>
+                <TableCell>{item.opens_on === '' ? 'Always' : dateFormatter.format(new Date(item.opens_on))}</TableCell>
+                <TableCell>
+                  {item.closes_on === '' ? 'Never' : dateFormatter.format(new Date(item.closes_on))}
+                </TableCell>
                 <TableCell>{item.max_submissions === 0 ? 'Unlimited' : `${item.max_submissions} People`}</TableCell>
               </TableRow>
             ))}

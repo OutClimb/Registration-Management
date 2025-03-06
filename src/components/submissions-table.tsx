@@ -8,8 +8,13 @@ import { downloadCSV } from '@/utils/csv'
 export function SubmissionsTable({ form, submissions }: { form: FormDetailResponse; submissions: SubmissionResponse }) {
   const fields = Object.values(form.fields).sort((a, b) => a.order - b.order)
 
+  const dateFormatter = new Intl.DateTimeFormat(undefined, {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  })
+
   const handleDownload = () => {
-    const headers = fields.map((field) => field.slug)
+    const headers = ['submitted_on', ...fields.map((field) => field.slug)]
     downloadCSV(headers, submissions, `${form.slug}-submissions`)
   }
 
@@ -39,6 +44,7 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Submitted On</TableHead>
                 {fields.map((field) => (
                   <TableHead key={field.slug}>{field.name}</TableHead>
                 ))}
@@ -47,6 +53,7 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
             <TableBody>
               {submissions.map((item) => (
                 <TableRow key={`${item['ip_address']}-${item['submitted_on']}`}>
+                  <TableCell>{dateFormatter.format(new Date(item['submitted_on']))}</TableCell>
                   {fields.map((field) => (
                     <TableCell key={field.slug}>{item[field.slug]}</TableCell>
                   ))}

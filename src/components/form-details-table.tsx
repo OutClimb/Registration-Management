@@ -2,6 +2,11 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/u
 import { FormDetailResponse } from '@/types/form'
 
 export function FormDetailsTable({ form }: { form: FormDetailResponse }) {
+  const dateFormatter = new Intl.DateTimeFormat(undefined, {
+    dateStyle: 'full',
+    timeStyle: 'short',
+  })
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -17,11 +22,11 @@ export function FormDetailsTable({ form }: { form: FormDetailResponse }) {
             </TableRow>
             <TableRow>
               <TableHead>Opens On</TableHead>
-              <TableCell>{form.opens_on === '' ? 'Forever' : form.opens_on}</TableCell>
+              <TableCell>{form.opens_on === '' ? 'Always' : dateFormatter.format(new Date(form.opens_on))}</TableCell>
             </TableRow>
             <TableRow>
               <TableHead>Closes On</TableHead>
-              <TableCell>{form.closes_on === '' ? 'Never' : form.closes_on}</TableCell>
+              <TableCell>{form.closes_on === '' ? 'Never' : dateFormatter.format(new Date(form.closes_on))}</TableCell>
             </TableRow>
             <TableRow>
               <TableHead>Max Number of Submissions</TableHead>
