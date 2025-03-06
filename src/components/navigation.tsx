@@ -39,7 +39,7 @@ export function Navigation() {
       {/* Sidebar */}
       <div
         className={cn(
-          'fixed inset-y-0 left-0 z-40 w-64 transform bg-sidebar transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
+          'fixed inset-y-0 left-0 z-40 max-w-64 min-w-64 transform bg-sidebar transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
