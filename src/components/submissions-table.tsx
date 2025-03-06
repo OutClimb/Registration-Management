@@ -25,24 +25,31 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
         </h2>
       </div>
       <div className="overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {fields.map((field) => (
-                <TableHead key={field.slug}>{field.name}</TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {submissions.map((item) => (
-              <TableRow key={`${item['ip_address']}-${item['submitted_on']}`}>
+        {submissions.length === 0 && (
+          <div className="flex items-center justify-center h-32">
+            <p className="text-gray-500">No submissions yet.</p>
+          </div>
+        )}
+        {submissions.length > 0 && (
+          <Table>
+            <TableHeader>
+              <TableRow>
                 {fields.map((field) => (
-                  <TableCell key={field.slug}>{item[field.slug]}</TableCell>
+                  <TableHead key={field.slug}>{field.name}</TableHead>
                 ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {submissions.map((item) => (
+                <TableRow key={`${item['ip_address']}-${item['submitted_on']}`}>
+                  {fields.map((field) => (
+                    <TableCell key={field.slug}>{item[field.slug]}</TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </div>
     </div>
   )
