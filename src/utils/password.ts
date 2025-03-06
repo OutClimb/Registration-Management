@@ -27,9 +27,9 @@ export async function updatePassword(password: string) {
     throw new Error('Unauthorized')
   } else if (!response.ok) {
     throw new Error('An error occurred. Please try again.')
-  } 
-  
-  try{
+  }
+
+  try {
     return await response.json()
   } catch {
     throw new Error('An error occurred. Please try again.')

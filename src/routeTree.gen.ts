@@ -120,26 +120,10 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/manage/form'
-    | '/manage/login'
-    | '/manage/reset'
-    | '/manage'
-    | '/manage/form/$formSlug'
+  fullPaths: '/manage/form' | '/manage/login' | '/manage/reset' | '/manage' | '/manage/form/$formSlug'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/manage/form'
-    | '/manage/login'
-    | '/manage/reset'
-    | '/manage'
-    | '/manage/form/$formSlug'
-  id:
-    | '__root__'
-    | '/manage_/form'
-    | '/manage_/login'
-    | '/manage_/reset'
-    | '/manage_/'
-    | '/manage_/form_/$formSlug'
+  to: '/manage/form' | '/manage/login' | '/manage/reset' | '/manage' | '/manage/form/$formSlug'
+  id: '__root__' | '/manage_/form' | '/manage_/login' | '/manage_/reset' | '/manage_/' | '/manage_/form_/$formSlug'
   fileRoutesById: FileRoutesById
 }
 
@@ -159,9 +143,7 @@ const rootRouteChildren: RootRouteChildren = {
   ManageFormFormSlugRoute: ManageFormFormSlugRoute,
 }
 
-export const routeTree = rootRoute
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {

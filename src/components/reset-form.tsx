@@ -98,7 +98,7 @@ export function ResetForm() {
           )}
           <p className="text-xs text-gray-600">
             Your new password must:
-            <ul className='list-disc list-inside mt-2 ml-2'>
+            <ul className="list-disc list-inside mt-2 ml-2">
               <li>be 16 characters long</li>
               <li>be under 72 characters</li>
               <li>contain one special character</li>
