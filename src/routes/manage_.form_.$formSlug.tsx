@@ -5,12 +5,25 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 import { FormDetailsTable } from '@/components/form-details-table'
 import { Button } from '@/components/ui/button'
 import { SquareArrowOutUpRight } from 'lucide-react'
+import { FormDetailResponse } from '@/types/form'
+import { SubmissionResponse } from '@/types/submission'
 
 export const Route = createFileRoute('/manage_/form_/$formSlug')({
   component: FormDetails,
   beforeLoad: async () => {
     if (localStorage.getItem('token') == null) {
       throw redirect({ to: '/manage/login' })
+    }
+  },
+  head: ({ loaderData }) => {
+    const data = loaderData as unknown as { form: FormDetailResponse, submissions: SubmissionResponse }
+
+    return {
+      meta: [
+        {
+          title: `${data.form.name || 'Form'} | OutClimb Registration Management`,
+        },
+      ],
     }
   },
   loader: async ({ params }) => {
@@ -33,17 +46,17 @@ export const Route = createFileRoute('/manage_/form_/$formSlug')({
 })
 
 function FormDetails() {
-  const data = Route.useLoaderData()
+  const data = Route.useLoaderData() as unknown as { form: FormDetailResponse, submissions: SubmissionResponse }
 
   const handleVisit = () => {
-    window.open(`/form/${data.form?.slug}`, '_blank')
+    window.open(`/form/${data.form.slug}`, '_blank')
   }
 
   return (
     <>
       <header className="mb-8 ml-12 md:ml-0">
         <h1 className="flex text-3xl font-bold tracking-tight">
-          <span className="flex-auto">{data.form?.name}</span>
+          <span className="flex-auto">{data.form.name}</span>
           <Button variant="outline" onClick={handleVisit}>
             <SquareArrowOutUpRight />
             Visit
