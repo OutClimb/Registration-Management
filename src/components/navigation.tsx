@@ -6,6 +6,7 @@ import { FileText, LogOut, Menu, X } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { logout } from '@/utils/user'
 
 export function Navigation() {
   const location = useLocation()
@@ -21,8 +22,7 @@ export function Navigation() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    navigate({ to: '/manage/login' })
+    logout(navigate)
   }
 
   const navItems = [

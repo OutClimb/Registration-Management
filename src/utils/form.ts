@@ -1,5 +1,6 @@
 import { getBaseURL } from './env'
 import type { FormDetailResponse, FormResponse } from '@/types/form'
+import { getToken } from './user'
 
 export async function fetchForm(slug: string): Promise<FormDetailResponse> {
   let response
@@ -26,7 +27,7 @@ export async function fetchForm(slug: string): Promise<FormDetailResponse> {
 }
 
 export async function fetchForms(): Promise<FormResponse> {
-  const token = localStorage.getItem('token') || ''
+  const token = getToken()
   let response
 
   try {

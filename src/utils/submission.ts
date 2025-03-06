@@ -1,8 +1,9 @@
 import type { SubmissionResponse } from '@/types/submission'
 import { getBaseURL } from './env'
+import { getToken } from './user'
 
 export async function fetchSubmissions(formSlug: string): Promise<SubmissionResponse> {
-  const token = localStorage.getItem('token') || ''
+  const token = getToken()
   let response
 
   try {

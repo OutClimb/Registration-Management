@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { SquareArrowOutUpRight } from 'lucide-react'
 import { FormDetailResponse } from '@/types/form'
 import { SubmissionResponse } from '@/types/submission'
+import { logout } from '@/utils/user'
 
 export const Route = createFileRoute('/manage_/form_/$formSlug')({
   component: FormDetails,
@@ -34,8 +35,7 @@ export const Route = createFileRoute('/manage_/form_/$formSlug')({
       }
     } catch (error) {
       if (error instanceof Error && error.message === 'Unauthorized') {
-        localStorage.removeItem('token')
-        throw redirect({ to: '/manage/login' })
+        logout()
       } else if (error instanceof Error && error.message === 'Not Found') {
         throw redirect({ to: '/manage/form' })
       }

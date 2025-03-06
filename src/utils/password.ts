@@ -1,7 +1,8 @@
 import { getBaseURL } from './env'
+import { getToken } from './user'
 
 export async function updatePassword(password: string) {
-  const token = localStorage.getItem('token') || ''
+  const token = getToken()
   const formData = {
     password,
   }

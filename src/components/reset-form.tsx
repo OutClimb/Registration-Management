@@ -10,6 +10,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { updatePassword } from '@/utils/password'
+import { logout } from '@/utils/user'
 
 export function ResetForm() {
   const navigate = useNavigate()
@@ -71,8 +72,7 @@ export function ResetForm() {
 
     try {
       await updatePassword(formData.password)
-      localStorage.removeItem('token')
-      navigate({ to: '/manage/login' })
+      logout(navigate)
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message)

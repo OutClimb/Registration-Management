@@ -1,5 +1,6 @@
 import { FormsTable } from '@/components/forms-table'
 import { fetchForms } from '@/utils/form'
+import { logout } from '@/utils/user'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/manage_/form')({
@@ -21,8 +22,7 @@ export const Route = createFileRoute('/manage_/form')({
       return await fetchForms()
     } catch (error) {
       if (error instanceof Error && error.message === 'Unauthorized') {
-        localStorage.removeItem('token')
-        throw redirect({ to: '/manage/login' })
+        logout()
       }
 
       throw error
