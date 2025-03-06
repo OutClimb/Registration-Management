@@ -16,9 +16,9 @@ export const Route = createFileRoute('/manage_/form')({
       },
     ],
   }),
-  loader: () => {
+  loader: async () => {
     try {
-      return fetchForms()
+      return await fetchForms()
     } catch (error) {
       if (error instanceof Error && error.message === 'Unauthorized') {
         localStorage.removeItem('token')
