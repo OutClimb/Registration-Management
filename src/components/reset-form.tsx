@@ -9,14 +9,13 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { fetchToken } from '@/utils/token'
+import { updatePassword } from '@/utils/password'
 
-export function LoginForm() {
+export function ResetForm() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [formData, setFormData] = useState({
-    username: '',
     password: '',
   })
 
@@ -33,26 +32,50 @@ export function LoginForm() {
     setError('')
 
     // Validate form
-    if (!formData.username || !formData.password) {
+    if (!formData.password) {
       setError('Please fill in all fields')
+      return
+    }
+
+    if (formData.password.length < 16) {
+      setError('Password must be at least 16 characters long')
+      return
+    }
+
+    if (formData.password.length > 72) {
+      setError('Password must be at most 72 characters long')
+      return
+    }
+
+    if (!/[^a-zA-Z0-9]/.test(formData.password)) {
+      setError('Password must contain at least one special character')
+      return
+    }
+
+    if (!/[A-Z]/.test(formData.password)) {
+      setError('Password must contain at least one uppercase letter')
+      return
+    }
+
+    if (!/[a-z]/.test(formData.password)) {
+      setError('Password must contain at least one lowercase letter')
+      return
+    }
+
+    if (!/[0-9]/.test(formData.password)) {
+      setError('Password must contain at least one number')
       return
     }
 
     setIsLoading(true)
 
     try {
-      const data = await fetchToken(formData.username, formData.password)
-      localStorage.setItem('token', data.token)
-      if (data.reset) {
-        navigate({ to: '/manage/reset' })
-      } else {
-        navigate({ to: '/manage/form' })
-      }
+      await updatePassword(formData.password)
+      localStorage.removeItem('token')
+      navigate({ to: '/manage/login' })
     } catch (error) {
-      if (error instanceof Error && error.message === 'Unauthorized') {
-        setError('Invalid email or password')
-      } else {
-        setError('An error occurred. Please try again.')
+      if (error instanceof Error) {
+        setError(error.message)
       }
     } finally {
       setIsLoading(false)
@@ -62,7 +85,7 @@ export function LoginForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Login</CardTitle>
+        <CardTitle>Password Reset</CardTitle>
       </CardHeader>
 
       <form onSubmit={handleSubmit}>
@@ -73,18 +96,19 @@ export function LoginForm() {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
-            <Input
-              id="username"
-              name="username"
-              type="text"
-              value={formData.username}
-              onChange={handleChange}
-              disabled={isLoading}
-              required
-            />
-          </div>
+          <p className="text-xs text-gray-600">
+            Your new password must:
+            <ul className='list-disc list-inside mt-2 ml-2'>
+              <li>be 16 characters long</li>
+              <li>be under 72 characters</li>
+              <li>contain one special character</li>
+              <li>contain one uppercase character</li>
+              <li>contain one lowercase character</li>
+              <li>contain one number</li>
+              <li>not contain your username</li>
+              <li>not be the same as your last password</li>
+            </ul>
+          </p>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
             <Input
@@ -103,10 +127,10 @@ export function LoginForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Signing in...
+                Resetting password...
               </>
             ) : (
-              'Sign in'
+              'Submit'
             )}
           </Button>
         </CardFooter>

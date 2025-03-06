@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ManageIndexImport } from './routes/manage_.index'
+import { Route as ManageResetImport } from './routes/manage_.reset'
 import { Route as ManageLoginImport } from './routes/manage_.login'
 import { Route as ManageFormImport } from './routes/manage_.form'
 import { Route as ManageFormFormSlugImport } from './routes/manage_.form_.$formSlug'
@@ -21,6 +22,12 @@ import { Route as ManageFormFormSlugImport } from './routes/manage_.form_.$formS
 const ManageIndexRoute = ManageIndexImport.update({
   id: '/manage_/',
   path: '/manage/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ManageResetRoute = ManageResetImport.update({
+  id: '/manage_/reset',
+  path: '/manage/reset',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ManageLoginImport
       parentRoute: typeof rootRoute
     }
+    '/manage_/reset': {
+      id: '/manage_/reset'
+      path: '/manage/reset'
+      fullPath: '/manage/reset'
+      preLoaderRoute: typeof ManageResetImport
+      parentRoute: typeof rootRoute
+    }
     '/manage_/': {
       id: '/manage_/'
       path: '/manage'
@@ -82,6 +96,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/manage/form': typeof ManageFormRoute
   '/manage/login': typeof ManageLoginRoute
+  '/manage/reset': typeof ManageResetRoute
   '/manage': typeof ManageIndexRoute
   '/manage/form/$formSlug': typeof ManageFormFormSlugRoute
 }
@@ -89,6 +104,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/manage/form': typeof ManageFormRoute
   '/manage/login': typeof ManageLoginRoute
+  '/manage/reset': typeof ManageResetRoute
   '/manage': typeof ManageIndexRoute
   '/manage/form/$formSlug': typeof ManageFormFormSlugRoute
 }
@@ -97,22 +113,40 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/manage_/form': typeof ManageFormRoute
   '/manage_/login': typeof ManageLoginRoute
+  '/manage_/reset': typeof ManageResetRoute
   '/manage_/': typeof ManageIndexRoute
   '/manage_/form_/$formSlug': typeof ManageFormFormSlugRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/manage/form' | '/manage/login' | '/manage' | '/manage/form/$formSlug'
+  fullPaths:
+    | '/manage/form'
+    | '/manage/login'
+    | '/manage/reset'
+    | '/manage'
+    | '/manage/form/$formSlug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/manage/form' | '/manage/login' | '/manage' | '/manage/form/$formSlug'
-  id: '__root__' | '/manage_/form' | '/manage_/login' | '/manage_/' | '/manage_/form_/$formSlug'
+  to:
+    | '/manage/form'
+    | '/manage/login'
+    | '/manage/reset'
+    | '/manage'
+    | '/manage/form/$formSlug'
+  id:
+    | '__root__'
+    | '/manage_/form'
+    | '/manage_/login'
+    | '/manage_/reset'
+    | '/manage_/'
+    | '/manage_/form_/$formSlug'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   ManageFormRoute: typeof ManageFormRoute
   ManageLoginRoute: typeof ManageLoginRoute
+  ManageResetRoute: typeof ManageResetRoute
   ManageIndexRoute: typeof ManageIndexRoute
   ManageFormFormSlugRoute: typeof ManageFormFormSlugRoute
 }
@@ -120,11 +154,14 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   ManageFormRoute: ManageFormRoute,
   ManageLoginRoute: ManageLoginRoute,
+  ManageResetRoute: ManageResetRoute,
   ManageIndexRoute: ManageIndexRoute,
   ManageFormFormSlugRoute: ManageFormFormSlugRoute,
 }
 
-export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>()
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {
@@ -134,6 +171,7 @@ export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileT
       "children": [
         "/manage_/form",
         "/manage_/login",
+        "/manage_/reset",
         "/manage_/",
         "/manage_/form_/$formSlug"
       ]
@@ -143,6 +181,9 @@ export const routeTree = rootRoute._addFileChildren(rootRouteChildren)._addFileT
     },
     "/manage_/login": {
       "filePath": "manage_.login.tsx"
+    },
+    "/manage_/reset": {
+      "filePath": "manage_.reset.tsx"
     },
     "/manage_/": {
       "filePath": "manage_.index.tsx"

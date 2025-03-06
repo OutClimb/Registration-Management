@@ -15,7 +15,7 @@ export const Route = createRootRoute({
 function Root() {
   const location = useLocation()
 
-  if (location.pathname === '/manage/login') {
+  if (location.pathname === '/manage/login' || location.pathname === '/manage/reset') {
     return (
       <>
         <HeadContent />
