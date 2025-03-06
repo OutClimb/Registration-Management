@@ -29,7 +29,7 @@ function Root() {
       <HeadContent />
       <div className="flex min-h-screen w-screen flex-col md:flex-row">
         <Navigation />
-        <main className="grow-1 shrink-1 basis-(--body-width) min-h-screen p-6 md:p-10 w-(--body-width)">
+        <main className="grow-1 shrink-1 basis-full w-full min-h-screen p-6 md:p-10 md:basis-(--body-width) md:w-(--body-width)">
           <Outlet />
         </main>
       </div>
