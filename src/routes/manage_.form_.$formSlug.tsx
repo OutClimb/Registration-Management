@@ -16,7 +16,7 @@ export const Route = createFileRoute('/manage_/form_/$formSlug')({
     }
   },
   head: ({ loaderData }) => {
-    const data = loaderData as unknown as { form: FormDetailResponse, submissions: SubmissionResponse }
+    const data = loaderData as unknown as { form: FormDetailResponse; submissions: SubmissionResponse }
 
     return {
       meta: [
@@ -46,7 +46,7 @@ export const Route = createFileRoute('/manage_/form_/$formSlug')({
 })
 
 function FormDetails() {
-  const data = Route.useLoaderData() as unknown as { form: FormDetailResponse, submissions: SubmissionResponse }
+  const data = Route.useLoaderData() as unknown as { form: FormDetailResponse; submissions: SubmissionResponse }
 
   const handleVisit = () => {
     window.open(`/form/${data.form.slug}`, '_blank')
