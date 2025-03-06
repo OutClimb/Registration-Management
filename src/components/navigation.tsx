@@ -32,7 +32,12 @@ export function Navigation() {
   return (
     <>
       {/* Mobile menu button */}
-      <Button variant="ghost" size="icon" className={cn('absolute left-6 top-6 z-50 md:hidden', isOpen ? 'hidden' : '')} onClick={toggleSidebar}>
+      <Button
+        variant="ghost"
+        size="icon"
+        className={cn('absolute left-6 top-6 z-50 md:hidden', isOpen ? 'hidden' : '')}
+        onClick={toggleSidebar}
+      >
         {isOpen ? <X /> : <Menu />}
       </Button>
 

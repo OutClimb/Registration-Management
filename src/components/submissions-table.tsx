@@ -17,11 +17,16 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
     <div>
       <div className="border-b px-6 py-4">
         <h2 className="flex items-center text-xl font-semibold">
-          <span className="flex-auto">Submissions ({submissions.length})</span>
-          <Button variant="outline" onClick={handleDownload}>
-            <Download />
-            Download
-          </Button>
+          {submissions.length === 0 && <span className="flex-auto">Submissions</span>}
+          {submissions.length > 0 && (
+            <>
+              <span className="flex-auto">Submissions ({submissions.length})</span>
+              <Button variant="outline" onClick={handleDownload}>
+                <Download />
+                Download
+              </Button>
+            </>
+          )}
         </h2>
       </div>
       <div className="overflow-x-auto">
