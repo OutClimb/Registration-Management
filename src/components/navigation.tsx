@@ -16,6 +16,10 @@ export function Navigation() {
     setIsOpen(!isOpen)
   }
 
+  const closeSidebar = () => {
+    setIsOpen(false)
+  }
+
   const handleLogout = () => {
     localStorage.removeItem('token')
     navigate({ to: '/manage/login' })
@@ -64,6 +68,7 @@ export function Navigation() {
               <Link
                 key={item.href}
                 to={item.href}
+                onClick={closeSidebar}
                 className={cn(
                   'flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
                   location.pathname.startsWith(item.href)
