@@ -27,15 +27,11 @@ function Root() {
   return (
     <>
       <HeadContent />
-      <div className="flex min-h-screen flex-col md:flex-row">
+      <div className="flex min-h-screen w-screen flex-col md:flex-row">
         <Navigation />
-        <div className="flex-1">
-          <div className="flex min-h-screen flex-col md:flex-row">
-            <main className="flex-1 p-6 md:p-10">
-              <Outlet />
-            </main>
-          </div>
-        </div>
+        <main className="grow-1 shrink-1 basis-(--body-width) min-h-screen p-6 md:p-10 w-(--body-width)">
+          <Outlet />
+        </main>
       </div>
     </>
   )
