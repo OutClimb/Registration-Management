@@ -29,7 +29,7 @@
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@tanstack/eslint-plugin-query": "^5.66.1",
-    "@tanstack/router-plugin": "^1.114.17",
+    "@tanstack/router-plugin": "^1.121.34",
     "@types/node": "^24.0.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
