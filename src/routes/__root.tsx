@@ -27,9 +27,9 @@ function Root() {
   return (
     <>
       <HeadContent />
-      <div className="flex min-h-screen w-screen flex-col md:flex-row">
+      <div className="flex h-dvh w-screen flex-col md:flex-row">
         <Navigation />
-        <main className="grow-1 shrink-1 basis-full w-full h-screen overflow-y-auto p-6 md:p-10 md:basis-(--body-width) md:w-(--body-width)">
+        <main className="grow-1 shrink-1 basis-full w-full h-dvh overflow-y-auto p-6 md:p-10 md:basis-(--body-width) md:w-(--body-width)">
           <Outlet />
         </main>
       </div>

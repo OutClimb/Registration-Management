@@ -48,7 +48,7 @@ export function Navigation() {
       {/* Sidebar */}
       <div
         className={cn(
-          'h-screen inset-y-0 left-0 z-40 shrink-0 grow-0 basis-(--sidebar-width) transform bg-sidebar transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
+          'h-dvh inset-y-0 left-0 z-40 shrink-0 grow-0 basis-(--sidebar-width) transform bg-sidebar transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
