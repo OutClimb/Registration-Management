@@ -16,9 +16,12 @@ import { Download, Trash2 } from 'lucide-react'
 import { downloadCSV } from '@/utils/csv'
 import React from 'react'
 import { getRole } from '@/utils/user'
+import { deleteSubmission } from '@/utils/submission'
+import { useRouter } from '@tanstack/react-router'
 
 export function SubmissionsTable({ form, submissions }: { form: FormDetailResponse; submissions: SubmissionResponse }) {
   const [submissionIdToDelete, setSubmissionIdToDelete] = React.useState<string | null>(null)
+  const router = useRouter()
 
   const fields = Object.values(form.fields).sort((a, b) => a.order - b.order)
 
@@ -50,7 +53,14 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
     setSubmissionIdToDelete(null)
   }
 
-  const handleYesClick = () => {}
+  const handleYesClick = async () => {
+    if (!submissionIdToDelete) {
+      return
+    }
+
+    await deleteSubmission(submissionIdToDelete)
+    router.invalidate()
+  }
 
   return (
     <div>

@@ -31,3 +31,27 @@ export async function fetchSubmissions(formSlug: string): Promise<SubmissionResp
     throw new Error('An error occurred. Please try again.')
   }
 }
+
+export async function deleteSubmission(submissionId: string): Promise<boolean> {
+  const token = getToken()
+  let response
+
+  try {
+    response = await fetch(`${getBaseURL()}/api/v1/submission/${submissionId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: token,
+      },
+    })
+  } catch {
+    throw new Error('An error occurred. Please try again.')
+  }
+
+  if (response.status === 401) {
+    throw new Error('Unauthorized')
+  } else if (!response.ok) {
+    throw new Error('An error occurred. Please try again.')
+  }
+
+  return response.status === 200
+}
