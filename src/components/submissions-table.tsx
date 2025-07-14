@@ -15,6 +15,7 @@ import { Button } from './ui/button'
 import { Download, Trash2 } from 'lucide-react'
 import { downloadCSV } from '@/utils/csv'
 import React from 'react'
+import { getRole } from '@/utils/user'
 
 export function SubmissionsTable({ form, submissions }: { form: FormDetailResponse; submissions: SubmissionResponse }) {
   const [submissionIdToDelete, setSubmissionIdToDelete] = React.useState<string | null>(null)
@@ -32,6 +33,10 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
   }
 
   const handleSubmissionDeletion = (id: string) => {
+    if (getRole() !== 'admin') {
+      return
+    }
+
     setSubmissionIdToDelete(id)
   }
 
@@ -77,7 +82,7 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
                 {fields.map((field) => (
                   <TableHead key={field.slug}>{field.name}</TableHead>
                 ))}
-                <TableHead>Actions</TableHead>
+                {getRole() === 'admin' && <TableHead>Actions</TableHead>}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -87,11 +92,13 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
                   {fields.map((field) => (
                     <TableCell key={field.slug}>{item[field.slug]}</TableCell>
                   ))}
-                  <TableCell>
-                    <Button variant="destructive" onClick={() => handleSubmissionDeletion(item['id'])}>
-                      <Trash2 /> Delete Submission?
-                    </Button>
-                  </TableCell>
+                  {getRole() === 'admin' && (
+                    <TableCell>
+                      <Button variant="destructive" onClick={() => handleSubmissionDeletion(item['id'])}>
+                        <Trash2 /> Delete Submission?
+                      </Button>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
@@ -99,28 +106,30 @@ export function SubmissionsTable({ form, submissions }: { form: FormDetailRespon
         )}
       </div>
 
-      <AlertDialog open={submissionIdToDelete !== null} onOpenChange={handleOpenChange}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone, this will permanently delete this submission.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel asChild>
-              <Button variant="outline" onClick={handleNoClick}>
-                No
-              </Button>
-            </AlertDialogCancel>
-            <AlertDialogAction asChild>
-              <Button variant="destructive" onClick={handleYesClick}>
-                Yes
-              </Button>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {getRole() === 'admin' && (
+        <AlertDialog open={submissionIdToDelete !== null} onOpenChange={handleOpenChange}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone, this will permanently delete this submission.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel asChild>
+                <Button variant="outline" onClick={handleNoClick}>
+                  No
+                </Button>
+              </AlertDialogCancel>
+              <AlertDialogAction asChild>
+                <Button variant="destructive" onClick={handleYesClick}>
+                  Yes
+                </Button>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </div>
   )
 }
