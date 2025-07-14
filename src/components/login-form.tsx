@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { fetchSelf, fetchToken } from '@/utils/user'
+import { fetchToken } from '@/utils/user'
 
 export function LoginForm() {
   const navigate = useNavigate()
@@ -43,9 +43,6 @@ export function LoginForm() {
     try {
       const data = await fetchToken(formData.username, formData.password)
       localStorage.setItem('token', data.token)
-
-      const user = await fetchSelf()
-      localStorage.setItem('user', JSON.stringify(user))
 
       if (data.reset) {
         navigate({ to: '/manage/reset' })

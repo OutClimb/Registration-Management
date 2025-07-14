@@ -1,36 +1,13 @@
-import type { TokenResponse, UserResponse } from '@/types/user'
+import type { TokenResponse } from '@/types/user'
 import type { UseNavigateResult } from '@tanstack/react-router'
 import { redirect } from '@tanstack/react-router'
 import { getBaseURL } from './env'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
 
-export async function fetchSelf(): Promise<UserResponse> {
-  const token = getToken()
-  let response
-
-  try {
-    response = await fetch(`${getBaseURL()}/api/v1/self`, {
-      method: 'GET',
-      headers: {
-        Authorization: token,
-      },
-    })
-  } catch {
-    throw new Error('An error occurred. Please try again.')
-  }
-
-  if (response.status === 401) {
-    throw new Error('Unauthorized')
-  } else if (response.status === 404) {
-    throw new Error('Not Found')
-  } else if (!response.ok) {
-    throw new Error('An error occurred. Please try again.')
-  }
-
-  try {
-    return await response.json()
-  } catch {
-    throw new Error('An error occurred. Please try again.')
-  }
+interface Payload extends JwtPayload {
+  user_id: string
+  ip_address: string
+  role: string
 }
 
 export async function fetchToken(username: string, password: string): Promise<TokenResponse> {
@@ -56,6 +33,16 @@ export async function fetchToken(username: string, password: string): Promise<To
   } catch {
     throw new Error('An error occurred. Please try again.')
   }
+}
+
+export function getRole(): string {
+  const token = localStorage.getItem('token')
+  if (!token) {
+    return ''
+  }
+
+  const { role } = jwtDecode<Payload>(token)
+  return role
 }
 
 export function getToken(required: boolean = true): string {
