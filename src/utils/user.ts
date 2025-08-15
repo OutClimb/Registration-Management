@@ -1,16 +1,10 @@
-import type { TokenResponse } from '@/types/user'
 import type { UseNavigateResult } from '@tanstack/react-router'
 import { redirect } from '@tanstack/react-router'
 import { getBaseURL } from './env'
-import { jwtDecode, JwtPayload } from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
+import { JwtClaims } from '@/types/user'
 
-interface Payload extends JwtPayload {
-  user_id: string
-  ip_address: string
-  role: string
-}
-
-export async function fetchToken(username: string, password: string): Promise<TokenResponse> {
+export async function fetchToken(username: string, password: string): Promise<string> {
   try {
     const formData = {
       username,
@@ -28,7 +22,7 @@ export async function fetchToken(username: string, password: string): Promise<To
     } else if (response.status >= 300) {
       throw new Error('An error occurred. Please try again.')
     } else {
-      return await response.json()
+      return await response.text()
     }
   } catch {
     throw new Error('An error occurred. Please try again.')
@@ -41,8 +35,8 @@ export function getRole(): string {
     return ''
   }
 
-  const { role } = jwtDecode<Payload>(token)
-  return role
+  const claims = jwtDecode<JwtClaims>(token)
+  return claims.user.role
 }
 
 export function getToken(required: boolean = true): string {
@@ -55,7 +49,6 @@ export function getToken(required: boolean = true): string {
 
 export function logout(navigate?: UseNavigateResult<string>) {
   localStorage.removeItem('token')
-  localStorage.removeItem('user')
 
   if (navigate) {
     navigate({ to: '/manage/login' })

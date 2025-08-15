@@ -10,6 +10,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { fetchToken } from '@/utils/user'
+import { jwtDecode } from 'jwt-decode'
+import { JwtClaims } from '@/types/user'
 
 export function LoginForm() {
   const navigate = useNavigate()
@@ -41,10 +43,11 @@ export function LoginForm() {
     setIsLoading(true)
 
     try {
-      const data = await fetchToken(formData.username, formData.password)
-      localStorage.setItem('token', data.token)
+      const token = await fetchToken(formData.username, formData.password)
+      localStorage.setItem('token', token)
 
-      if (data.reset) {
+      const claims = jwtDecode<JwtClaims>(token)
+      if (claims.user.requirePasswordReset) {
         navigate({ to: '/manage/reset' })
       } else {
         navigate({ to: '/manage/form' })
