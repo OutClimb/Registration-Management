@@ -1,3 +1,5 @@
+/* oxlint-disable eslint-plugin-react/only-export-components */
+
 import { createFileRoute, HeadContent } from '@tanstack/react-router'
 import { ResetForm } from '@/components/reset-form'
 

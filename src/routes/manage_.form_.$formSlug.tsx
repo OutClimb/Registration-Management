@@ -1,3 +1,5 @@
+/* oxlint-disable eslint-plugin-react/only-export-components */
+
 import { SubmissionsTable } from '@/components/submissions-table'
 import { fetchForm } from '@/utils/form'
 import { fetchSubmissions } from '@/utils/submission'

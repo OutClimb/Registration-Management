@@ -1,3 +1,5 @@
+/* oxlint-disable eslint-plugin-react/only-export-components */
+
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/manage_/')({

@@ -1,3 +1,5 @@
+/* oxlint-disable eslint-plugin-react/only-export-components */
+
 import { Navigation } from '@/components/navigation'
 import { HeadContent, Outlet, createRootRoute, useLocation } from '@tanstack/react-router'
 

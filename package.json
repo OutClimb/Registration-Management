@@ -8,7 +8,8 @@
     "dev": "vite",
     "format": "oxfmt --check **/*.{js,jsx,ts,tsx,md,json,yml,yaml}",
     "format:fix": "oxfmt **/*.{js,jsx,ts,tsx,md,json,yml,yaml}",
-    "lint": "eslint .",
+    "lint": "oxlint ./src/**/*.{js,jsx,ts,tsx}",
+    "lint:fix": "oxlint --fix ./src/**/*.{js,jsx,ts,tsx}",
     "prepare": "husky",
     "preview": "vite preview"
   },
@@ -29,27 +30,24 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@eslint/js": "^9.38.0",
     "@tanstack/eslint-plugin-query": "^5.91.2",
     "@tanstack/router-plugin": "^1.114.17",
     "@types/node": "^24.10.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^5.0.4",
-    "eslint": "^9.39.0",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "oxfmt": "^0.47.0",
+    "oxlint": "^1.62.0",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.46.2",
     "vite": "^7.1.12"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
+      "oxlint --fix --no-error-on-unmatched-pattern",
       "oxfmt --no-error-on-unmatched-pattern"
     ],
     "*.{md,json,yml,yaml}": [

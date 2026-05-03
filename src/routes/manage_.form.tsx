@@ -1,3 +1,5 @@
+/* oxlint-disable eslint-plugin-react/only-export-components */
+
 import { FormsTable } from '@/components/forms-table'
 import { fetchForms } from '@/utils/form'
 import { logout } from '@/utils/user'

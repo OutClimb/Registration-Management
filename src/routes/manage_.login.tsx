@@ -1,3 +1,5 @@
+/* oxlint-disable eslint-plugin-react/only-export-components */
+
 import { createFileRoute, HeadContent } from '@tanstack/react-router'
 import { LoginForm } from '@/components/login-form'
 
