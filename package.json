@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc -b && vite build",
     "dev": "vite",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write .",
+    "format": "oxfmt --check **/*.{js,jsx,ts,tsx,md,json,yml,yaml}",
+    "format:fix": "oxfmt **/*.{js,jsx,ts,tsx,md,json,yml,yaml}",
     "lint": "eslint .",
     "prepare": "husky",
     "preview": "vite preview"
@@ -42,26 +42,18 @@
     "globals": "^16.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "prettier": "^3.7.4",
+    "oxfmt": "^0.47.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.2",
     "vite": "^7.1.12"
   },
-  "prettier": {
-    "printWidth": 120,
-    "tabWidth": 2,
-    "useTabs": false,
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
-      "prettier --write"
+      "oxfmt --no-error-on-unmatched-pattern"
     ],
-    "*.{json,yml}": [
-      "prettier --write"
+    "*.{md,json,yml,yaml}": [
+      "oxfmt --no-error-on-unmatched-pattern"
     ]
   }
 }
